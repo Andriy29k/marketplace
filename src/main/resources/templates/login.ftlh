@@ -3,7 +3,7 @@
 <head>
     <title>eSales Point</title>
 </head>
-<body>
+<body style="background-color: ${bgColor}">
 <h1>eSales Point</h1><hr>
 <h4>Авторизація</h4>
 <form action="/login" method="post">

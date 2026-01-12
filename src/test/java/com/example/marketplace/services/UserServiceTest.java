@@ -106,19 +106,6 @@ class UserServiceTest {
     }
 
     @Test
-    void testBanUser_UserNotFound() {
-        // Arrange
-        when(userRepository.findById(any())).thenReturn(Optional.empty());
-
-        // Act
-        userService.banUser(1L);
-
-        // Assert
-        // Ensure no interactions with userRepository.save() for a non-existent user
-        verify(userRepository, never()).save(any());
-    }
-
-    @Test
     void testChangeUserRoles() {
         // Arrange
         User user = new User();

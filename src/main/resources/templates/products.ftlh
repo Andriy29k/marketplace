@@ -3,7 +3,7 @@
 <head>
     <title>eSales Point</title>
 </head>
-<body>
+<body style="background-color: ${bgColor}">
     <h1>eSalesPoint</h1><hr>
     <#if user.email??>
     <h3>І'мя користувача: <i>${user.name}</i></h3>

@@ -3,6 +3,7 @@ package com.example.marketplace.controllers;
 import com.example.marketplace.models.Product;
 import com.example.marketplace.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +20,14 @@ import java.security.Principal;
 public class ProductController {
     private final ProductService productService;
 
+    @Value("${app.background-color}")
+    private String bgColor;
+
     @GetMapping("/")
     public String products(@RequestParam (name = "title", required = false) String title, Principal principal, Model model) {
         model.addAttribute("products", productService.listProducts(title));
         model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("bgColor", bgColor);
         return "products";
     }
 

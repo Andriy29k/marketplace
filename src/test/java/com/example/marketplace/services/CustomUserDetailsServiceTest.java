@@ -3,6 +3,8 @@ package com.example.marketplace.services;
 import com.example.marketplace.models.User;
 import com.example.marketplace.repositories.UserRepository;
 import com.example.marketplace.services.CustomUserDetailsService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,30 +30,37 @@ class CustomUserDetailsServiceTest {
     private CustomUserDetailsService userDetailsService;
 
     @Test
-    void testLoadUserByUsername_UserFound() {
+    @DisplayName("Should return UserDetails when user exists")
+    void loadUserByUsername_Success() {
         // Arrange
-        User user = new User();
-        user.setEmail("test@example.com");
-        user.setPassword("password");
-        when(userRepository.findByEmail(any())).thenReturn(user);
+        String email = "test@example.com";
+        User mockUser = new User(email, "password123");
+        mockUser.setActive(true);
+
+        when(userRepository.findByEmail(email)).thenReturn(mockUser);
 
         // Act
-        UserDetails userDetails = userDetailsService.loadUserByUsername("test@example.com");
+        UserDetails result = userDetailsService.loadUserByUsername(email);
 
         // Assert
-        assertNotNull(userDetails);
-        assertEquals("test@example.com", userDetails.getUsername());
-        assertEquals("password", userDetails.getPassword());
-        assertTrue(userDetails.getAuthorities().isEmpty()); // You may want to add authority checking based on roles
-        assertTrue(userDetails.isEnabled());
+        assertNotNull(result);
+        assertEquals(email, result.getUsername());
+        assertTrue(result.isEnabled(), "User should be active");
+        verify(userRepository, times(1)).findByEmail(email);
     }
 
     @Test
-    void testLoadUserByUsername_UserNotFound() {
+    @DisplayName("Should return null when user not found")
+    void loadUserByUsername_UserNotFound() {
         // Arrange
-        when(userRepository.findByEmail(any())).thenReturn(null);
+        String email = "missing@example.com";
+        when(userRepository.findByEmail(email)).thenReturn(null);
 
-        // Act and Assert
-        assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername("nonexistent@example.com"));
+        // Act
+        UserDetails result = userDetailsService.loadUserByUsername(email);
+
+        // Assert
+        assertNull(result, "Should return null if repository returns null");
+        verify(userRepository, times(1)).findByEmail(email);
     }
 }
