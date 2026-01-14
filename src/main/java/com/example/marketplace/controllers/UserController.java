@@ -37,6 +37,7 @@ public class UserController {
     public String createUser(User user, Model model) {
         if (!userService.createUser(user)) {
             model.addAttribute("errorMessage", "Користувач з email: " + user.getEmail() + " вже існує");
+            model.addAttribute("bgColor", bgColor);
             return "registration";
         }
         return "redirect:/login";
