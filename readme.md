@@ -23,14 +23,6 @@ Environment variable ```BG_COLOR``` using by me to deploying in different enviro
 2. Go to ```src/main/resources/application.properties``` and replace  ```DATABASE_URL```, ```DATABASE_USERNAME```, ```DATABASE_PASSWORD```, ```BG_COLOR```(optional) by your values OR export this values to environment variables
 3. Run using IDE by starting ```MarketplaceApplication``` class (another variants of deploying in the next items)
 
-
-### Deploying using JAVA Compiler
-
-1. Create ```marketplace``` database in MySql Database.
-2. Go to ```src/main/resources/application.properties``` and replace  ```DATABASE_URL```, ```DATABASE_USERNAME```, ```DATABASE_PASSWORD```, ```BG_COLOR```(optional) by your values OR export this values to environment variables
-3. Run using IDE by starting ```MarketplaceApplication``` class (another variants of deploying in the next items)
-4. Go to ```http://localhost:8080```
-
 ### Deploying using Apache Tomcat
 
 1. Create ```marketplace``` database in MySql Database.
